@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Button from '@mui/material/Button';
 
 // 반드시 대문자로 시작하기
 function Header() {
@@ -12,9 +14,7 @@ function Header() {
   );
 }
 
-//test commit
 function Nav(props) {
-  console.log(props);
   const list = props.data.map((e) => {
     return (
       <li key={e.id}>
@@ -40,8 +40,16 @@ function Article(props) {
 }
 function App() {
   const topics = [
-    { id: 1, title: 'html', body: 'html is ..' },
-    { id: 2, title: 'css', body: 'css is ..' },
+    {
+      id: 1,
+      title: 'html',
+      body: 'html is ..',
+    },
+    {
+      id: 2,
+      title: 'css',
+      body: 'css is ..',
+    },
   ];
   return (
     <div>
@@ -49,6 +57,11 @@ function App() {
       <Nav data={topics}></Nav>
       <Article title="Welcome" body="Hello, WEB!"></Article>
       <Article title="HTML" body="HTML is ..."></Article>
+      <ButtonGroup>
+        <Button>Create</Button>
+        <Button>Update</Button>
+      </ButtonGroup>
+      <Button variant="outlined">Delete</Button>
     </div>
   );
 }
