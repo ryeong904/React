@@ -4,11 +4,21 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 
 // 반드시 대문자로 시작하기
-function Header() {
+function Header(props) {
   return (
     <header>
       <h1>
-        <a href="/">Web</a>
+        <a
+          href="/"
+          onClick={(evt) => {
+            evt.preventDefault();
+            console.log('evt', evt);
+            console.log(props);
+            props.onSelect();
+          }}
+        >
+          Web
+        </a>
       </h1>
     </header>
   );
@@ -18,7 +28,15 @@ function Nav(props) {
   const list = props.data.map((e) => {
     return (
       <li key={e.id}>
-        <a href={'/read/' + e.id}>{e.title}</a>
+        <a
+          href={'/read/' + e.id}
+          onClick={(evt) => {
+            evt.preventDefault();
+            props.onSelect();
+          }}
+        >
+          {e.title}
+        </a>
       </li>
     );
   });
@@ -51,14 +69,34 @@ function App() {
       body: 'css is ..',
     },
   ];
+
+  function createHandler() {
+    alert('create!');
+  }
+
   return (
     <div>
-      <Header></Header>
-      <Nav data={topics}></Nav>
+      <Header
+        onSelect={() => {
+          alert('Header!!');
+        }}
+      ></Header>
+      <Nav
+        data={topics}
+        onSelect={() => {
+          alert('nav!!');
+        }}
+      ></Nav>
       <Article title="Welcome" body="Hello, WEB!"></Article>
       <Article title="HTML" body="HTML is ..."></Article>
       <ButtonGroup>
-        <Button>Create</Button>
+        <Button
+          onClick={() => {
+            alert('create!');
+          }}
+        >
+          Create
+        </Button>
         <Button>Update</Button>
       </ButtonGroup>
       <Button variant="outlined">Delete</Button>
