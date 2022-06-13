@@ -60,13 +60,38 @@ function Article(props) {
     </article>
   );
 }
+
+function Create(props) {
+  return (
+    <article>
+      <h2>Create</h2>
+      <form
+        onSubmit={(evt) => {
+          evt.preventDefault();
+          const title = evt.target.title.value;
+          const body = evt.target.body.value;
+          props.onCreate(title, body);
+        }}
+      >
+        <input type="text" name="title" placeholder="title"></input>
+        <br />
+        <br />
+        <textarea name="body" placeholrder="body"></textarea>
+        <br />
+        <br />
+        <input type="submit"></input>
+      </form>
+    </article>
+  );
+}
 function App() {
   const [mode, setMode] = useState('WELCOME');
   const [id, setId] = useState(null);
   //새로운 상태가 생성됨. 그 안에 있는 값은 새로운 상태의 default 값.
   // 최초 한 번만 WELCOME이고, 바뀔 수 있음
   // 첫번째 바꿀때는 mode, 두번째 바꿀때는 setMode를 사용한다.
-  const topics = [
+  const [nextId, setNextId] = useState(3);
+  const [topics, setTopics] = useState([
     {
       id: 1,
       title: 'html',
@@ -77,7 +102,7 @@ function App() {
       title: 'css',
       body: 'css is ..',
     },
-  ];
+  ]);
 
   let content = null;
   if (mode === 'WELCOME') {
@@ -90,8 +115,22 @@ function App() {
         return false;
       }
     })[0];
-    console.log(topic);
     content = <Article title={topic.title} body={topic.body}></Article>;
+  } else if (mode === 'CREATE') {
+    content = (
+      <Create
+        onCreate={(title, body) => {
+          setTopics(() => {
+            const newTopics = [...topics];
+            newTopics.push({ id: nextId, title, body });
+            return newTopics;
+          });
+          setId(nextId);
+          setMode('READ');
+          setNextId(nextId + 1);
+        }}
+      />
+    );
   }
 
   return (
@@ -114,7 +153,7 @@ function App() {
       <ButtonGroup>
         <Button
           onClick={() => {
-            alert('create!');
+            setMode('CREATE');
           }}
         >
           Create
