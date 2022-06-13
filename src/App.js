@@ -6,8 +6,13 @@ import Button from '@mui/material/Button';
 
 // 반드시 대문자로 시작하기
 function Header(props) {
+  const myStyle = {
+    //camel 형식
+    borderBottom: '1px solid gray',
+    padding: '10px',
+  };
   return (
-    <header>
+    <header style={myStyle}>
       <h1>
         <a
           href="/"
