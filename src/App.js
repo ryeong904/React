@@ -3,84 +3,12 @@ import './App.css';
 import { useState } from 'react';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { HeaderStyled } from './HeaderStyled';
+import { Nav } from './Nav';
+import { Article } from './Article';
+import { Create } from './Create';
 
-// 반드시 대문자로 시작하기
-function Header(props) {
-  return (
-    <header className={props.className}>
-      <h1>
-        <Link
-          to="/"
-          onClick={(evt) => {
-            props.onSelect();
-          }}
-        >
-          WWW
-        </Link>
-      </h1>
-    </header>
-  );
-}
-const HeaderStyled = styled(Header)`
-  border-bottom: 1px solid gray;
-`;
-
-function Nav(props) {
-  const liTags = props.data.map((e) => {
-    return (
-      <li key={e.id}>
-        <Link
-          to={'/read/' + e.id}
-          onClick={(evt) => {
-            props.onSelect(e.id);
-          }}
-        >
-          {e.title}
-        </Link>
-      </li>
-    );
-  });
-  return (
-    <nav>
-      <ol>{liTags}</ol>
-    </nav>
-  );
-}
-
-function Article(props) {
-  return (
-    <article>
-      <h2>{props.title}</h2>
-      {props.body}
-    </article>
-  );
-}
-
-function Create(props) {
-  return (
-    <article>
-      <h2>Create</h2>
-      <form
-        onSubmit={(evt) => {
-          evt.preventDefault();
-          const title = evt.target.title.value;
-          const body = evt.target.body.value;
-          props.onCreate(title, body);
-        }}
-      >
-        <input type="text" name="title" placeholder="title"></input>
-        <br />
-        <br />
-        <textarea name="body" placeholrder="body"></textarea>
-        <br />
-        <br />
-        <input type="submit"></input>
-      </form>
-    </article>
-  );
-}
 function App() {
   const [mode, setMode] = useState('WELCOME');
   const [id, setId] = useState(null);
